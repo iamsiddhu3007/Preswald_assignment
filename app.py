@@ -1,4 +1,4 @@
-from preswald import text, plotly, connect, get_df
+from preswald import text, plotly, connect, get_df, slider
 import pandas as pd
 import plotly.express as px
 
@@ -14,18 +14,24 @@ df['room_type'] = df['room_type'].str.strip().str.title()
 df['neighbourhood_group'] = df['neighbourhood_group'].str.strip().str.title()
 df['is_active'] = df['reviews_per_month'].fillna(0) > 0
 
-df_filtered = df[df['price'] > 100]
+min_price = int(df['price'].min())
+max_price = int(df['price'].max())
+
+low = slider("Minimum Price", min_val=min_price, max_val=max_price, default=min_price)
+high = slider("Maximum Price", min_val=min_price, max_val=max_price, default=max_price)
+
+df_filtered = df[(df['price'] >= low) & (df['price'] <= high)]
 
 fig = px.scatter_mapbox(
     df_filtered,
     lat="latitude",
     lon="longitude",
-    color="neighbourhood_group",
+    color="room_type",
     hover_name="name",
-    hover_data=["price", "room_type"],
+    hover_data=["price", "number_of_reviews", "neighbourhood_group"],
     zoom=10,
     height=600,
-    title="NYC Airbnb Listings (Price > $100)"
+    title=f"Listings from ${low} to ${high}"
 )
 
 fig.update_layout(mapbox_style="carto-positron")
