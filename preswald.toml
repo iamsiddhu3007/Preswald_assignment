@@ -1,0 +1,18 @@
+[project]
+title = "NYC Airbnb Map"
+version = "0.1.0"
+port = 8501
+slug = "nyc-airbnb-map"
+entrypoint = "app.py"
+
+[branding]
+name = "NYC Airbnb Explorer"
+primaryColor = "#3b82f6"
+
+[data.AB_NYC_2019]
+type = "csv"
+path = "AB_NYC_2019.csv"
+
+[logging]
+level = "INFO"
+format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
