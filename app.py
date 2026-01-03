@@ -36,3 +36,5 @@ fig = px.scatter_mapbox(
 
 fig.update_layout(mapbox_style="carto-positron")
 plotly(fig)
+
+## update demo
